@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Video Background Example" />
+    <title>Video Background Example</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      #video-background {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      #video-controls {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        z-index: 1;
+      }
+
+      #video-controls button {
+        display: block;
+        margin-bottom: 10px;
+        padding: 10px 15px;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      #video-controls button:last-child {
+        margin-bottom: 0;
+      }
+
+      h1 {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 32px;
+        color: #fff;
+        text-align: center;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="video-container">
+      <video id="video-background" loop muted>
+        <source src="./Video.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div id="video-controls">
+      <button id="play-button">Play</button>
+      <button id="pause-button">Pause</button>
+    </div>
+
+    <h1>VIDEO PROJECT</h1>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var video = document.querySelector("#video-background");
+        var playButton = document.querySelector("#play-button");
+        var pauseButton = document.querySelector("#pause-button");
+
+        playButton.addEventListener("click", function () {
+          video.play();
+        });
+
+        pauseButton.addEventListener("click", function () {
+          video.pause();
+        });
+
+        document.addEventListener("visibilitychange", function () {
+          if (document.visibilityState === "visible") {
+            if (!video.classList.contains("playing")) {
+              video.classList.add("playing");
+              video.play();
+            }
+          } else {
+            video.classList.remove("playing");
+            video.pause();
+          }
+        });
+
+        video.addEventListener("canplaythrough", function () {
+          video.classList.add("playing");
+        });
+      });
+    </script>
+  </body>
+</html>
